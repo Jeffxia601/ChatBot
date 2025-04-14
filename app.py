@@ -2,6 +2,10 @@ from flask import Flask, request, render_template, redirect, url_for, session, j
 import openai
 import os
 
+app = Flask(__name__)
+app.secret_key = os.urandom(24)  # Needed for session
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 character_presets = {
     "female": {
         "mature": {
@@ -24,10 +28,6 @@ character_presets = {
         }
     }
 }
-
-app = Flask(__name__)
-app.secret_key = os.urandom(24)  # Needed for session
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Add this route for character selection
 @app.route('/')

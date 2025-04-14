@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Choose Your Date</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="selection-container">
+        <h1>💘 Choose Your Date</h1>
+
+        <form action="/chat" method="POST">
+            <label for="gender">Who do you want to date?</label>
+            <select name="gender" id="gender" required>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+            </select>
+
+            <label for="personality">Choose a personality:</label>
+            <select name="personality" id="personality" required>
+                <option value="mature">Mature & Wise</option>
+                <option value="energetic">Young & Energetic</option>
+            </select>
+
+            <button type="submit">Start Chatting 💬</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dating Chat Practice💕</title>
+    <title>Dating Practice Chat 💕</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Say something..." />
-    <button onclick="sendMessage()">Send</button>
+    <div class="wrapper">
+        <div class="top-bar">
+            <button class="new-chat-btn" onclick="goBack()"> Start New Conversation</button>
+        </div>
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2 id="partner-name">Chat with Your Date</h2>
+            </div>
+            <div id="chatbox" class="chat-box"></div>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="Type your message..." />
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
 
     <script>
+        const partnerName = "{{ partner_name }}";
+        document.getElementById("partner-name").innerText = `Chat with ${partnerName}`;
         async function sendMessage() {
             const input = document.getElementById("userInput").value;
-            const response = await fetch("/chat", {
+            if (!input.trim()) return;
+
+            const chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += `<div class="user-msg"><strong>You:</strong> ${input}</div>`;
+
+            const response = await fetch("/chat/message", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: input })
             });
             const data = await response.json();
-            const chatbox = document.getElementById("chatbox");
-            chatbox.innerHTML += `<p><strong>You:</strong> ${input}</p>`;
-            chatbox.innerHTML += `<p><strong>Mina:</strong> ${data.reply}</p>`;
+            chatbox.innerHTML += `<div class="bot-msg"><strong>${partnerName}:</strong> ${data.reply}</div>`;
+
+            chatbox.scrollTop = chatbox.scrollHeight;
             document.getElementById("userInput").value = "";
         }
+        function goBack() {
+            fetch("/reset", { method: "POST" })
+                .then(() => window.location.href = "/");
+        }
+
+        // Enter key acts like "Send"
+        document.getElementById("userInput").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // prevent newline
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>

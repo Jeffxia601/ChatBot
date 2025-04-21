@@ -2,12 +2,13 @@
 <html>
 <head>
     <title>Choose Your Date</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}?v=2">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <div class="selection-container">
-        <h1>💘 Choose Your Date</h1>
+        <h1>Choose Your Date 💘</h1>
 
         <form action="/welcome" method="POST">
             <label for="gender">Who do you want to date?</label>

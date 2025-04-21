@@ -2,12 +2,13 @@
 <html>
 <head>
     <title>Welcome to Your Chat Date</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}?v=2">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <div class="selection-container">
-        <h2>🎉 Welcome!</h2>
+        <h1>Welcome! 🎉</h1>
         <p>You’ve chosen:</p>
         <ul style="text-align: left;">
             <li><strong>Default Name:</strong> {{ name }}</li>

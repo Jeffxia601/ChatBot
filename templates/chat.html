@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dating Practice Chat 💕</title>
+    <title>Dating Practice Chat</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}?v=2">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -33,7 +34,7 @@
             const chatbox = document.getElementById("chatbox");
             chatbox.innerHTML += `<div class="user-msg"><strong>You:</strong> ${message}</div>`;
 
-            // ✅ Immediately clear the input box and reset height
+            // Immediately clear the input box and reset height
             inputBox.value = "";
             inputBox.style.height = "auto";
 

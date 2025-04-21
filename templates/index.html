@@ -1,59 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dating Practice Chat 💕</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>AI Dating Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="wrapper">
-        <div class="top-bar">
-            <button class="new-chat-btn" onclick="goBack()"> Start New Conversation</button>
-        </div>
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2 id="partner-name">Chat with Your Date</h2>
-            </div>
-            <div id="chatbox" class="chat-box"></div>
-            <div class="input-area">
-                <input type="text" id="userInput" placeholder="Type your message..." />
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const partnerName = "{{ partner_name }}";
-        document.getElementById("partner-name").innerText = `Chat with ${partnerName}`;
-        async function sendMessage() {
-            const input = document.getElementById("userInput").value;
-            if (!input.trim()) return;
-
-            const chatbox = document.getElementById("chatbox");
-            chatbox.innerHTML += `<div class="user-msg"><strong>You:</strong> ${input}</div>`;
-
-            const response = await fetch("/chat/message", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: input })
-            });
-            const data = await response.json();
-            chatbox.innerHTML += `<div class="bot-msg"><strong>${partnerName}:</strong> ${data.reply}</div>`;
-
-            chatbox.scrollTop = chatbox.scrollHeight;
-            document.getElementById("userInput").value = "";
-        }
-        function goBack() {
-            fetch("/reset", { method: "POST" })
-                .then(() => window.location.href = "/");
-        }
-
-        // Enter key acts like "Send"
-        document.getElementById("userInput").addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();  // prevent newline
-                sendMessage();
-            }
-        });
-    </script>
+  <div class="selection-container">
+    <h1>Welcome to the Dating Practice Chat 💘</h1>
+    <p>Practice chatting with a virtual avatar and improve your dating skills!</p>
+    <form action="/select" method="GET">
+        <button type="submit" class="new-chat-btn-small">Start</button>
+    </form>    
+  </div>
 </body>
 </html>

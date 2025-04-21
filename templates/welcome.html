@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Your Chat Date</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="selection-container">
+        <h2>🎉 Welcome!</h2>
+        <p>You’ve chosen:</p>
+        <ul style="text-align: left;">
+            <li><strong>Default Name:</strong> {{ name }}</li>
+            <li><strong>Gender:</strong> {{ gender.capitalize() }}</li>
+            <li><strong>Personality:</strong> {{ personality.capitalize() }}</li>
+        </ul>
+
+        <form action="/chat" method="POST">
+            <label for="custom_name"><strong>Would you like to rename your date partner?</strong></label>
+            <input type="text" id="custom_name" name="custom_name" placeholder="e.g. Lily" value="{{ name }}" required />
+
+            <button type="submit" class="new-chat-btn-small">Start Chat 💬</button>
+        </form>
+
+        <form action="/select" method="GET">
+            <button type="submit" class="new-chat-btn-small">Change Settings 🔁</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,54 +1,58 @@
+/* === Base Reset and Font === */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
     background-color: #e5ddd5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
+/* === General Wrapper === */
 .wrapper {
     max-width: 450px;
     width: 100%;
-    margin: auto;
+    margin: 40px auto 20px auto;  /* top spacing for mobile */
     position: relative;
 }
 
-body {
-    background-color: #e5ddd5;
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 40px;
-}
-
+/* === Chat Container === */
 .chat-container {
-    background-color: #fff;
-    width: 400px;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 450px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
+    margin: auto;
 }
 
+/* === Chat Header === */
 .chat-header {
     background-color: #075e54;
     color: white;
     padding: 10px 15px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+/* === Chat Box (Message Area) === */
 .chat-box {
     flex-grow: 1;
     padding: 15px;
     overflow-y: auto;
-    height: 400px;
+    height: calc(100vh - 200px); /* Responsive height */
+    max-height: 500px;
     background-color: #ece5dd;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
 }
 
+/* === Message Bubbles === */
 .user-msg {
     background-color: #dcf8c6;
     padding: 8px 12px;
@@ -56,43 +60,88 @@ body {
     margin: 8px 0;
     max-width: 80%;
     align-self: flex-end;
+    word-wrap: break-word;
 }
 
 .bot-msg {
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 8px 12px;
     border-radius: 7px;
     margin: 8px 0;
     max-width: 80%;
     align-self: flex-start;
+    word-wrap: break-word;
 }
 
+/* === Input Area === */
 .input-area {
     display: flex;
+    flex-direction: row;
+    gap: 10px;
     padding: 10px;
     background-color: #f0f0f0;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    box-sizing: border-box;
 }
 
-input[type="text"] {
+/* === Input Field === */
+/* input[type="text"] {
     flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+} */
+
+textarea#userInput {
+    flex-grow: 1;
+    resize: none;
+    overflow: hidden;
+    font-size: 16px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    line-height: 1.5;
+    max-height: 120px; /* Optional: limit to 4-5 lines */
+    min-height: 40px;
+    box-sizing: border-box;
 }
 
+
+/* === Button Style === */
 button {
-    margin-left: 10px;
     padding: 10px 15px;
     background-color: #25d366;
     color: white;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* === Small "New Chat" Button in Header === */
+.new-chat-btn-small {
+    background-color: #25d366;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.new-chat-btn-small:hover {
+    background-color: #1da851;
+}
+
+/* === Selection Page Container (used in select.html and welcome.html) === */
 .selection-container {
     max-width: 400px;
+    width: 90%;
     margin: auto;
     padding: 30px;
     background: #ffffff;
@@ -100,8 +149,10 @@ button {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     text-align: center;
     margin-top: 100px;
+    box-sizing: border-box;
 }
 
+/* === Dropdowns and Buttons in Selection Page === */
 .selection-container select,
 .selection-container button {
     width: 100%;
@@ -110,42 +161,29 @@ button {
     font-size: 16px;
 }
 
-.top-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
+/* === Responsive Enhancements === */
+@media screen and (max-width: 480px) {
+    .chat-container {
+        border-radius: 0;
+        box-shadow: none;
+    }
 
-.new-chat-btn {
-    background-color: #25d366;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+    .chat-box {
+        height: calc(100vh - 180px);
+        padding: 10px;
+    }
 
+    .selection-container {
+        margin-top: 50px;
+        padding: 20px;
+    }
 
-/* .new-chat-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #25d366;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    cursor: pointer;
-    z-index: 999;
-    transition: background-color 0.3s ease;
-} */
+    .input-area {
+        padding: 8px;
+    }
 
-.new-chat-btn:hover {
-    background-color: #1da851;
+    button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
 }

@@ -260,19 +260,49 @@ body {
 
 /* === Responsive === */
 @media screen and (max-width: 480px) {
-    .main-box {
+    /* .main-box {
         margin: 30px 10px;
         padding: 20px;
         min-height: 480px;
-    }
+    } */
 
-    .main-box.chat-page {
+    /* .main-box.chat-page {
         width: 100%;
         max-width: 480px;
         margin: 0 auto;
         height: 100vh;
         border-radius: 0;
         padding: 0 !important;
+    } */
+
+    .main-box {
+        max-width: 450px;
+        width: 90%;
+        height: 100vh;
+        max-height: 900px;
+        margin: 0 auto;
+        padding: 60px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        box-sizing: border-box;
+        text-align: center;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .main-box.chat-page {
+        height: 100vh;
+        max-height: 900px;
+        margin: 0 auto;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0 !important; /* ✅ 关键：覆盖全局 padding */
     }
 
     .main-box h1 {

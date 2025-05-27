@@ -10,8 +10,8 @@ body {
 .main-box {
     max-width: 450px;
     width: 90%;
-    height: 100vh;
-    max-height: 900px;
+    height: 90vh;
+    max-height: 800px;
     margin: 0 auto;
     padding: 60px;
     background-color: #ffffff;
@@ -27,8 +27,8 @@ body {
 
 /* === Chat Page Override === */
 .main-box.chat-page {
-    height: 100vh;
-    max-height: 900px;
+    height: 90vh;
+    max-height: 800px;
     margin: 0 auto;
     border-radius: 12px;
     overflow: hidden;
@@ -278,8 +278,8 @@ body {
     .main-box {
         max-width: 450px;
         width: 90%;
-        height: 100vh;
-        max-height: 900px;
+        height: 90vh;
+        max-height: 800px;
         margin: 0 auto;
         padding: 60px;
         background-color: #ffffff;
@@ -294,8 +294,8 @@ body {
     }
 
     .main-box.chat-page {
-        height: 100vh;
-        max-height: 900px;
+        height: 90vh;
+        max-height: 800px;
         margin: 0 auto;
         border-radius: 12px;
         overflow: hidden;

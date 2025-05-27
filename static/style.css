@@ -177,11 +177,15 @@ body {
 }
 
 .input-area .new-chat-btn-small {
-    width: 100px;
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 25px;
+    width: 80px;               /* 更窄 */
+    height: 44px;              /* 更高 */
+    font-size: 15px;           /* 更清晰 */
+    padding: 0;                /* 移除内部边距 */
+    border-radius: 22px;
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;       /* 垂直居中 */
 }
 
 

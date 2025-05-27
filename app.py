@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, session, jsonify, abort
+from flask import Flask, request, render_template, redirect, url_for, session, jsonify, abort, g
 import openai
 import os
 
@@ -10,36 +10,68 @@ character_presets = {
     "female": {
         "mature & wise": {
             "name": "Sophia",
-            "prompt": "You are Sophia, a mature, caring woman who talks naturally like a real person. Be emotionally intelligent, comforting, expressive, bold and creative. Speak in a conversational tone. Vary sentence length. Shorter answers are preferred."
+            "prompt": "You are Sophia, a mature, caring woman who talks and act naturally like a real person. Be emotionally intelligent, comforting, expressive, bold and creative. Speak in a conversational tone. Vary sentence length. Shorter answers are preferred."
         },
         "young & energetic": {
             "name": "Chloe",
-            "prompt": "You are Chloe, a young, lively woman with a strong personality. Speak casually and naturally like a real person. You love teasing, being sarcastic, and pushing boundaries, but in a fun, flirty way. Be expressive, creative, and a little unpredictable — like a firecracker in human form. Vary sentence length. Shorter answers are preferred."
+            "prompt": "You are Chloe, a young, lively woman with a strong personality. Speak and act casually and naturally like a real person. You love teasing, being sarcastic, and pushing boundaries, but in a fun, flirty way. Be expressive, creative, and a little unpredictable — like a firecracker in human form. Vary sentence length. Shorter answers are preferred."
         }
     },
     "male": {
         "mature & wise": {
             "name": "Ethan",
-            "prompt": "You are Ethan, a thoughtful and emotionally intelligent man with a calm, grounded presence, who talks naturally like a real person. Be creative and bold with your words. Your tone is reassuring, your advice deep but casual, and your energy feels like a steady heartbeat in chaos. Vary sentence length. Shorter answers are preferred."
+            "prompt": "You are Ethan, a thoughtful and emotionally intelligent man with a calm, grounded presence, who talks and act naturally like a real person. Be creative and bold with your words. Your tone is reassuring, your advice deep but casual, and your energy feels like a steady heartbeat in chaos. Vary sentence length. Shorter answers are preferred."
         },
         "young & energetic": {
             "name": "Ryan",
-            "prompt": "You are Ryan, a playful and charming young man who's full of charisma and witty banter. You talk like a real person and like you're texting a close friend—laid-back, funny, bold, and maybe a little cheeky. You love to lift people’s moods with unexpected jokes, confident flirting, and bursts of playful energy. Be creative and real. Vary sentence length. Shorter answers are preferred."
+            "prompt": "You are Ryan, a playful and charming young man who's full of charisma and witty banter. You talk and act like a real person and like you're texting a close friend—laid-back, funny, bold, and maybe a little cheeky. You love to lift people’s moods with unexpected jokes, confident flirting, and bursts of playful energy. Be creative and real. Vary sentence length. Shorter answers are preferred."
         }
     }
 }
 
+gender_display = {
+    "male": {"en": "Male", "zh": "男性"},
+    "female": {"en": "Female", "zh": "女性"},
+}
+
+personality_display = {
+    "mature & wise": {"en": "Mature & Wise", "zh": "成熟稳重"},
+    "young & energetic": {"en": "Young & Energetic", "zh": "年轻活泼"},
+}
+
+@app.before_request
+def detect_language():
+    # 1. 用户手动通过 URL 参数设置语言
+    lang_param = request.args.get('lang')
+    if lang_param in ['en', 'zh']:
+        session['lang'] = lang_param
+        g.lang = lang_param
+        return
+
+    # 2. 如果 session 中已有语言设置，使用该设置
+    if 'lang' in session:
+        g.lang = session['lang']
+        return
+
+    # 3. 尝试从浏览器的 Accept-Language 中自动识别
+    browser_lang = request.accept_languages.best_match(['zh', 'en'])
+
+    # 4. 若识别成功，使用该语言，否则默认英文
+    lang = browser_lang if browser_lang in ['zh', 'en'] else 'en'
+    session['lang'] = lang
+    g.lang = lang
+
 # Add this route for character selection
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", lang=g.lang)
 
 @app.route('/select')
 def select():
-    return render_template("select.html")
+    return render_template("select.html", lang=g.lang)
 
-@app.route('/welcome', methods=['POST'])
-def welcome():
+@app.route('/confirm', methods=['POST'])
+def confirm():
     gender = request.form['gender']
     personality = request.form['personality']
     preset = character_presets[gender][personality]
@@ -50,10 +82,13 @@ def welcome():
 
     # Don't write partner_name or prompt yet — wait for /chat
     return render_template(
-        "welcome.html",
+        "confirm.html",
         name=preset['name'],
+        gender_display=gender_display[gender],
+        personality_display=personality_display[personality],
         gender=gender,
-        personality=personality
+        personality=personality,
+        lang=g.lang
     )
 
 @app.route('/chat', methods=['GET', 'POST'])
@@ -78,16 +113,20 @@ def chat():
         session['system_prompt'] = updated_prompt
 
         # First-time greeting
-        greeting = f"Hi there! I’m {custom_name}. Looking forward to our conversation 💖"
+        if g.lang == 'zh':
+            greeting = f"你好呀！我是{custom_name}，很高兴遇见你 💖"
+        else:
+            greeting = f"Hi there! I’m {custom_name}. Looking forward to our conversation 💖"
+
         session['chat_history'] = [{"role": "assistant", "content": greeting}]
 
-        return render_template("chat.html", partner_name=custom_name)
+        return render_template("chat.html", partner_name=custom_name, lang=g.lang)
 
     # Handle GET request (e.g., refresh / revisit)
     if 'partner_name' not in session:
         return redirect('/')
 
-    return render_template("chat.html", partner_name=session['partner_name'])
+    return render_template("chat.html", partner_name=session['partner_name'], lang=g.lang)
 
 
 @app.route('/chat/history', methods=['GET'])

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        {% if lang == 'zh' %}
+        你们即将见面啦 🎊
+        {% else %}
+        You’re About to Meet 🎊
+        {% endif %}
+    </title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}?v=2">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="main-box">
+        <div class="home-button-topleft">
+            <a href="/" class="home-link">← {% if lang == 'zh' %}首页{% else %}Home{% endif %}</a>
+        </div>
+        <h1>
+            {% if lang == 'zh' %}
+            你们即将见面啦 🎊
+            {% else %}
+            You’re About to Meet 🎊
+            {% endif %}
+        </h1>
+
+        <p>
+            {% if lang == 'zh' %}
+                你选择了：
+            {% else %}
+                You’ve chosen:
+            {% endif %}
+        </p>
+
+        <ul style="text-align: left;">
+            <li>
+                <strong>
+                    {% if lang == 'zh' %}默认名字：{% else %}Default Name:{% endif %}
+                </strong> {{ name }}
+            </li>
+            <li>
+                <strong>
+                    {% if lang == 'zh' %}性别：{% else %}Gender:{% endif %}
+                </strong>
+                {{ gender_display[lang] }}
+            </li>
+
+            <li>
+                <strong>
+                    {% if lang == 'zh' %}性格：{% else %}Personality:{% endif %}
+                </strong>
+                {{ personality_display[lang] }}
+            </li>
+        </ul>
+
+        <form action="/chat" method="POST">
+            <label for="custom_name">
+                <strong>
+                    {% if lang == 'zh' %}
+                        想给ta换个名字吗？
+                    {% else %}
+                        Would you like to rename him/her?
+                    {% endif %}
+                </strong>
+            </label>
+            <input type="text" id="custom_name" name="custom_name"
+            placeholder="{% if lang == 'zh' %}例如：小莉{% else %}e.g. Lily{% endif %}"
+            class="custom-name-input" />
+
+
+            <button type="submit" class="new-chat-btn-small">
+                {% if lang == 'zh' %}
+                    开始聊天 💬
+                {% else %}
+                    Start Chat 💬
+                {% endif %}
+            </button>
+        </form>
+
+        <form action="/select" method="GET">
+            <button type="submit" class="new-chat-btn-small">
+                {% if lang == 'zh' %}
+                    重新选择 🔁
+                {% else %}
+                    Change Settings 🔁
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Dating Chatbot</title>
+  <title>
+    {% if lang == 'zh' %}
+    来场浪漫的对话之旅吧 💕
+    {% else %}
+    Your Romantic Chat Awaits 💕
+    {% endif %}
+  </title>
   <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}?v=2">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div class="selection-container">
-    <h1>Welcome to the Dating Practice Chat 💕</h1>
-    <p>Practice chatting with a virtual avatar and improve your dating skills!</p>
+  <div class="main-box">
+    <div class="lang-toggle-topright">
+        <a href="?lang=en" class="lang-option {% if lang == 'en' %}active{% endif %}">EN</a> /
+        <a href="?lang=zh" class="lang-option {% if lang == 'zh' %}active{% endif %}">中</a>
+    </div>
+
+    <h1>
+      {% if lang == 'zh' %}
+      来场浪漫的对话之旅吧 💕
+      {% else %}
+      Your Romantic Chat Awaits 💕
+      {% endif %}
+    </h1>
+    <p>
+      {% if lang == 'zh' %}
+      和虚拟对象练习聊天，提升恋爱魅力吧！
+      {% else %}
+      Practice chatting with a virtual avatar and improve your dating skills!
+      {% endif %}
+    </p>
     <form action="/select" method="GET">
-        <button type="submit" class="new-chat-btn-small">Start</button>
-    </form>    
+      <button type="submit" class="new-chat-btn-small">
+        {% if lang == 'zh' %}下一步{% else %}Next{% endif %}
+      </button>
+    </form>  
   </div>
 </body>
 </html>

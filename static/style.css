@@ -6,24 +6,99 @@ body {
     background-color: #e5ddd5;
 }
 
-/* === General Wrapper === */
-.wrapper {
+/* === Unified Layout Container === */
+.main-box {
     max-width: 450px;
-    width: 100%;
-    margin: 40px auto 20px auto;  /* top spacing for mobile */
-    position: relative;
-}
-
-/* === Chat Container === */
-.chat-container {
+    width: 90%;
+    height: 100vh;
+    max-height: 900px;
+    margin: 0 auto;
+    padding: 45px;
     background-color: #ffffff;
-    width: 100%;
-    max-width: 450px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin: auto;
+    justify-content: flex-start;
+}
+
+/* === Chat Page Override === */
+.main-box.chat-page {
+    height: 100vh;
+    max-height: 900px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 !important; /* ✅ 关键：覆盖全局 padding */
+}
+
+/* === Typography === */
+.main-box h1 {
+    font-size: 26px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.main-box p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.main-box ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.main-box li {
+    font-size: 16px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.main-box label {
+    font-size: 15px;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.main-box input[type="text"],
+.main-box select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.main-box button {
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 25px;
+    background-color: #25d366;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-box button:hover {
+    background-color: #1da851;
 }
 
 /* === Chat Header === */
@@ -31,28 +106,30 @@ body {
     background-color: #075e54;
     color: white;
     padding: 10px 15px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    flex-shrink: 0;
 }
 
-/* === Chat Box (Message Area) === */
+/* === Chat Box === */
 .chat-box {
     flex-grow: 1;
-    padding: 15px;
+    flex-shrink: 1;
     overflow-y: auto;
-    height: calc(100vh - 200px); /* Responsive height */
-    max-height: 500px;
+    padding: 15px;
     background-color: #ece5dd;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    min-height: 0; /* ⛳ 关键点：允许在 flex 布局中收缩 */
 }
 
-/* === Message Bubbles === */
+
+/* === Messages === */
 .user-msg {
     background-color: #dcf8c6;
     padding: 8px 12px;
@@ -76,51 +153,39 @@ body {
 /* === Input Area === */
 .input-area {
     display: flex;
-    flex-direction: row;
     gap: 10px;
     padding: 10px;
     background-color: #f0f0f0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top: 1px solid #ddd;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
-/* === Input Field === */
-/* input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-} */
-
-textarea#userInput {
-    flex-grow: 1;
+.input-area textarea {
+    flex: 1;
+    min-width: 0;
     resize: none;
     overflow: hidden;
     font-size: 16px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid #ccc;
     line-height: 1.5;
-    max-height: 120px; /* Optional: limit to 4-5 lines */
+    max-height: 120px;
     min-height: 40px;
     box-sizing: border-box;
 }
 
-
-/* === Button Style === */
-button {
-    padding: 10px 15px;
-    background-color: #25d366;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.input-area .new-chat-btn-small {
+    width: 100px;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 25px;
+    flex-shrink: 0;
 }
 
-/* === Small "New Chat" Button in Header === */
+
+/* === Small Buttons (Top Bar) === */
 .new-chat-btn-small {
     background-color: #25d366;
     color: white;
@@ -131,51 +196,97 @@ button {
     border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .new-chat-btn-small:hover {
     background-color: #1da851;
 }
 
-/* === Selection Page Container (used in select.html and welcome.html) === */
-.selection-container {
-    max-width: 400px;
-    width: 90%;
-    margin: auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
-    margin-top: 100px;
-    box-sizing: border-box;
+/* === Language Switch === */
+.lang-toggle-topright {
+    position: absolute;
+    top: 30px;
+    right: 30px;
 }
 
-/* === Dropdowns and Buttons in Selection Page === */
-.selection-container select,
-.selection-container button {
-    width: 100%;
-    padding: 10px;
-    margin: 15px 0;
-    font-size: 16px;
+.lang-option {
+    font-size: 13px;
+    text-decoration: none;
+    color: #666;
+    padding: 4px 10px;
+    margin-left: 4px;
+    border-radius: 6px;
+    background-color: #f2f2f2;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
 }
 
-/* === Responsive Enhancements === */
+.lang-option:hover {
+    background-color: #e4e4e4;
+    color: #222;
+}
+
+.lang-option.active {
+    background-color: #d1eaff;
+    color: #0077cc;
+    border-color: #a3d3f2;
+    font-weight: bold;
+}
+
+/* === Home Button (Top Left) === */
+.home-button-topleft {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.home-link {
+    font-size: 13px;
+    text-decoration: none;
+    color: #666;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: #f2f2f2;
+    transition: background-color 0.2s ease;
+    border: 1px solid transparent;
+    font-weight: bold;
+}
+
+.home-link:hover {
+    background-color: #e4e4e4;
+    color: #222;
+}
+
+/* === Responsive === */
 @media screen and (max-width: 480px) {
-    .chat-container {
+    .main-box {
+        margin: 30px 10px;
+        padding: 20px;
+        min-height: 480px;
+    }
+
+    .main-box.chat-page {
+        height: 100vh;
+        max-height: none;
+        margin: 0;
         border-radius: 0;
-        box-shadow: none;
+    }
+
+    .main-box h1 {
+        font-size: 24px;
+    }
+
+    .main-box p {
+        font-size: 16px;
+    }
+
+    .main-box button {
+        font-size: 16px;
     }
 
     .chat-box {
-        height: calc(100vh - 180px);
         padding: 10px;
-    }
-
-    .selection-container {
-        margin-top: 50px;
-        padding: 20px;
     }
 
     .input-area {

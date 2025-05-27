@@ -1,89 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dating Practice Chat</title>
+    <title>
+        {% if lang == 'zh' %}
+        和 {{ partner_name }} 的心动聊天中 ❤️
+        {% else %}
+        Chatting with {{ partner_name }} ❤️
+        {% endif %}
+    </title>
     <link rel="icon" href="{{ url_for('static', filename='favicon-32x32.png') }}?v=2">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="wrapper">
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2 id="partner-name" style="margin: 0;">Chat with {{ partner_name }}</h2>
-                <form action="/reset" method="POST" style="margin-left: auto;">
-                    <button type="submit" class="new-chat-btn-small">New Chat</button>
-                </form>                
-            </div>
-            <div id="chatbox" class="chat-box"></div>
-            <div class="input-area">
-                <textarea id="userInput" placeholder="Type your message..." rows="1"></textarea>
-                <button onclick="sendMessage()" class="new-chat-btn-small">Send</button>
-            </div>
+    <div class="main-box chat-page">
+        <div class="chat-header">
+            <h2 id="partner-name">
+                {% if lang == 'zh' %}
+                    正在和 {{ partner_name }} 聊天中
+                {% else %}
+                    Chat with {{ partner_name }}
+                {% endif %}
+            </h2>
+
+            <form action="/select" method="GET" style="margin-left: auto;">
+                <button type="submit" class="new-chat-btn-small">
+                    {% if lang == 'zh' %}
+                        新的聊天
+                    {% else %}
+                        New Chat
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+
+        <div id="chatbox" class="chat-box"></div>
+
+        <div class="input-area">
+            <textarea id="userInput" placeholder="{% if lang == 'zh' %}请输入...{% else %}Type your message...{% endif %}" rows="1"></textarea>
+            <button onclick="sendMessage()" class="new-chat-btn-small">
+                {% if lang == 'zh' %}发送{% else %}Send{% endif %}
+            </button>
         </div>
     </div>
 
     <script>
         const partnerName = "{{ partner_name }}";
-        document.getElementById("partner-name").innerText = `Chat with ${partnerName}`;
-        async function sendMessage() {
-            const inputBox = document.getElementById("userInput");
-            const message = inputBox.value.trim();
-            if (!message) return;
-
-            const chatbox = document.getElementById("chatbox");
-            chatbox.innerHTML += `<div class="user-msg"><strong>You:</strong> ${message}</div>`;
-
-            // Immediately clear the input box and reset height
-            inputBox.value = "";
-            inputBox.style.height = "auto";
-
-            // Send to backend
-            const response = await fetch("/chat/message", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                alert(errorData.error || "AI is taking a nap, please try again later.");
-                return;
-            }
-
-            const data = await response.json();
-            chatbox.innerHTML += `<div class="bot-msg"><strong>${partnerName}:</strong> ${data.reply}</div>`;
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-
-        // Enter key acts like "Send"
-        document.getElementById("userInput").addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();  // prevent newline
-                sendMessage();
-            }
-        });
-        // Load chat history
-        window.onload = function () {
-            fetch("/chat/history")
-                .then(res => res.json())
-                .then(data => {
-                    const chatbox = document.getElementById("chatbox");
-                    data.history.forEach(msg => {
-                        const sender = msg.role === 'user' ? 'You' : partnerName;
-                        const className = msg.role === 'user' ? 'user-msg' : 'bot-msg';
-                        chatbox.innerHTML += `<div class="${className}"><strong>${sender}:</strong> ${msg.content}</div>`;
-                    });
-                    chatbox.scrollTop = chatbox.scrollHeight;
-                });
-        }
-        // Auto-expand textarea as user types
-        const userInput = document.getElementById("userInput");
-        userInput.addEventListener("input", function () {
-            this.style.height = "auto";
-            this.style.height = (this.scrollHeight) + "px";
-        });
-
     </script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
 </body>
 </html>

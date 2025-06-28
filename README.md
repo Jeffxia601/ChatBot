@@ -11,10 +11,11 @@ A web-based AI chat application that simulates dating conversations, deployed on
 ## Technical Stack
 - ​**Frontend**: HTML/CSS/JavaScript
 - ​**Backend**: Flask + OpenAI API
+- **Others**: Redis, Azure
 
 Currently deployed and under active development with future plans.
 
 ---
-*Personal full-stack project | Deployed April 2025*
+*Personal full-stack project | Deployed May 2025*
 
 

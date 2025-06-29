@@ -8,7 +8,7 @@ async function sendMessage() {
     if (!message) return;
 
     const chatbox = document.getElementById("chatbox");
-    chatbox.innerHTML += `<div class="user-msg"><strong>You:</strong> ${message}</div>`;
+    chatbox.innerHTML += `<div class="user-msg">${message}</div>`;
     inputBox.value = "";
     inputBox.style.height = "auto";
 

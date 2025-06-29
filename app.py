@@ -41,22 +41,22 @@ personality_display = {
 
 @app.before_request
 def detect_language():
-    # 1. 用户手动通过 URL 参数设置语言
+    # 1. User manually sets language via URL parameter
     lang_param = request.args.get('lang')
     if lang_param in ['en', 'zh']:
         session['lang'] = lang_param
         g.lang = lang_param
         return
 
-    # 2. 如果 session 中已有语言设置，使用该设置
+    # 2. Use language setting from session if available
     if 'lang' in session:
         g.lang = session['lang']
         return
 
-    # 3. 尝试从浏览器的 Accept-Language 中自动识别
+    # 3. Auto-detect language from browser's Accept-Language header
     browser_lang = request.accept_languages.best_match(['zh', 'en'])
 
-    # 4. 若识别成功，使用该语言，否则默认英文
+    # 4. Use detected language or default to English
     lang = browser_lang if browser_lang in ['zh', 'en'] else 'en'
     session['lang'] = lang
     g.lang = lang

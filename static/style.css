@@ -35,7 +35,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 0 !important; /* ✅ 关键：覆盖全局 padding */
+    padding: 0 !important; /* Important: Override global padding */
 }
 
 /* === Typography === */
@@ -125,7 +125,7 @@ body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    min-height: 0; /* ⛳ 关键点：允许在 flex 布局中收缩 */
+    min-height: 0; /* Important: Allow shrinking in flex layout */
 }
 
 
@@ -177,15 +177,15 @@ body {
 }
 
 .input-area .new-chat-btn-small {
-    width: 80px;               /* 更窄 */
-    height: 44px;              /* 更高 */
-    font-size: 15px;           /* 更清晰 */
-    padding: 0;                /* 移除内部边距 */
+    width: 80px;               /* Narrower */
+    height: 44px;              /* Taller */
+    font-size: 15px;           /* Clearer */
+    padding: 0;                /* Remove inner padding */
     border-radius: 22px;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
-    align-items: center;       /* 垂直居中 */
+    align-items: center;       /* Vertical centering */
 }
 
 
@@ -306,7 +306,7 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        padding: 0 !important; /* ✅ 关键：覆盖全局 padding */
+        padding: 0 !important; /* Important: Override global padding */
     }
 
     .main-box h1 {

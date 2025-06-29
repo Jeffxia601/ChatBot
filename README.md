@@ -1,6 +1,6 @@
 # AI Dating Simulator
 > GPT-4o-mini powered AI chat application that simulates dating conversations, deployed on Microsoft Azure.
-> ​**Personal full-stack project**​ | Deployed May 2025 | ​**Python 3.12.7**
+> ​**Personal full-stack project**​ | Deployed May 2025 | ​**Python 3.11**
 
 [![Azure Deployment](https://img.shields.io/badge/Deployed%20on-Microsoft%20Azure-0089D6?logo=microsoft-azure)](https://dpchatbot-b3d9f4bdbveadcgt.centralus-01.azurewebsites.net/) (Click this icon to view the app)
 ## Key Features

@@ -1,4 +1,4 @@
-# Lightweight Virtual Character Dialogue System (An AI Dating Simulator)
+# Lightweight Virtual Character Dialogue System (AI Dating Simulator)
 > GPT-4o-mini powered AI chat application that simulates dating conversations, deployed on Microsoft Azure.
 > ​**Personal full-stack project**​ | Deployed May 2025 | ​**Python 3.11**
 

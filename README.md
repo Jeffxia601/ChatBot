@@ -9,7 +9,7 @@
 | :------------------------- | :---------------------------------------- | :-------------------------- |
 | ​**High-Frequency Dialog**​ | Flask + Redis async queue processing       | ​**~200ms avg response time**​ |
 | ​**Long-Context Stability**​ | Round-triggered summarization (5 turns/summary)<br>Key entity preservation algorithm | Effective memory decay mitigation |
-| ​**Production-Grade SLA**​   | Azure Container Deployment<br>Application Insights monitoring | ​**>99% availability**​<br>Millisecond-level response tracking |
+| ​**Production-Grade SLA**​   | Azure Container Deployment<br>Application Insights monitoring | ​**>99% availability**​ <br>Millisecond-level response tracking |
 
 ## Getting Started (Quick Setup)
 1.  ​**Install Dependencies:​**​
